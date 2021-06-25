@@ -1,0 +1,64 @@
+<div class='container mt-5'>
+  <form action='/api/product' method='POST'>
+    <div class='form-group'>
+      <label for='Nombre'>Nombre</label>
+      <input
+        type='text'
+        class='form-control'
+        value=''
+        name='name'
+        placeholder='Nombre'
+      />
+    </div>
+    <div class='row'>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='Price'>Precio</label>
+          <input
+            type='number'
+            class='form-control'
+            value=''
+            placeholder='Introduce un precio'
+            name='price'
+          />
+        </div>
+
+      </div>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='category'>Categoria</label>
+          <select class='form-control' id='category' name='category'>
+
+            <option>computers</option>
+            <option>phones</option>
+            <option>accesories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class='form-group'>
+      <label for='description'>Descripcion</label>
+      <input
+        type='text'
+        class='form-control'
+        value=''
+        placeholder='Escribe una descripcion'
+        name='description'
+      />
+    </div>
+    <div class='form-group'>
+      <label for='picture'>Imagen</label>
+      <input
+        type='text'
+        class='form-control'
+        value=''
+        placeholder='Url de la imagen'
+        name='avatar'
+      />
+    </div>
+    <p class='text-center'><button
+        type='submit'
+        class='btn btn-primary btn-lg'
+      >Guardar</button></p>
+  </form>
+</div>

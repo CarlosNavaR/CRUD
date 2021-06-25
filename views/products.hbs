@@ -1,0 +1,42 @@
+<div class='container mt-5'>
+  <table
+    id='myTable'
+    class='table table-stripped table-responsive-md btn-table'
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th class='th-sm'>Nombre</th>
+        <th class='th-sm'>Categoria</th>
+        <th class='th-sm'>Precio</th>
+        <th class='th-sm'>Descripcion</th>
+        <th class='th-sm'>Avatar</th>
+        <th class='th-sm'>Opciones</th>
+        <th class='th-sm'></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#products}}
+        <tr>
+          <br />
+          <td>{{_id}}</td>
+          <td>{{name}}</td>
+          <td>{{category}}</td>
+          <td>{{price}}</td>
+          <td>{{description}}</td>
+          <td>{{picture}}</td>
+          <td><form action='/api/product/{{_id}}' method='GET'>
+              <button type='submit' class='btn btn-primary'>Editar</button>
+            </form>
+          </td>
+          <td><form action='/api/product/{{_id}}' method='GET'>
+              <button type='submit' class='btn btn-danger'>Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      {{/products}}
+    </tbody>
+
+  </table>
+</div>

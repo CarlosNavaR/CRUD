@@ -1,0 +1,93 @@
+<div class='container mt-5'>
+  <form action='/api/product/{{product._id}}?_method=put' method='POST'>
+    <input type='hidden' name='_method' value='put' />
+
+    <div class='row'>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='Nombre'>ID</label>
+          <input
+            type='text'
+            class='form-control'
+            value='{{product._id}}'
+            name='_id'
+            disabled
+          />
+        </div>
+      </div>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='Nombre'>Nombre</label>
+          <input
+            type='text'
+            class='form-control'
+            value='{{product.name}}'
+            name='name'
+          />
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='Price'>Precio</label>
+          <input
+            type='number'
+            class='form-control'
+            value='{{product.price}}'
+            name='price'
+          />
+        </div>
+      </div>
+      <div class='col'>
+        <div class='form-group'>
+          <label for='category'>Categoria</label>
+          <select class='form-control' id='category' name='category'>
+            <option selected>{{product.category}}</option>
+            <option>computers</option>
+            <option>phones</option>
+            <option>accesories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class='form-group'>
+      <label for='description'>Descripcion</label>
+      <input
+        type='text'
+        class='form-control'
+        value='{{product.description}}'
+        name='description'
+      />
+    </div>
+    <div class='form-group'>
+      <label for='picture'>Imagen</label>
+      <input
+        type='text'
+        class='form-control'
+        value='{{product.picture}}'
+        name='picture'
+      />
+    </div>
+    <div class='row justify-content-center pt-2'>
+      <div class='col-md-2'>
+        <div class='form-group'>
+          <p class='text-center'><button
+              type='submit'
+              class='btn btn-primary btn-lg'
+            >Guardar</button></p>
+        </div>
+      </div>
+      <div class='col-md-2'>
+        <p class='text-center'>
+          <button
+            type='submit'
+            formaction='/api/product/{{product._id}}?_method=delete'
+            method='POST'
+            value='delete'
+            class='btn btn-danger btn-lg'
+          >Eliminar</button></p>
+      </div>
+    </div>
+  </form>
+</div>
