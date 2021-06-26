@@ -4,25 +4,41 @@
 const express = require('express');
 const Product = require('../models/product');
 const path = require('path');
-
+const expressSession = require('express-session');
+const authMidd = require('../middleware/authMiddleware');
+const redirectIfAuth = require('../middleware/redirectAuth');
 // Crear objeto de router
 const router = express.Router();
 
 //Exportar nuestro router
 module.exports = router;
 
+// Guardar cookies
+router.use(
+  expressSession({
+    secret: 'IttGalgos',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+// Variables globales
+router.use((req, res, next) => {
+  res.locals.loggedIn = req.session.userId || null;
+  next();
+});
 // Pagina home
 router.get('/', (req, res) => {
-  res.status(200).render('home');
+  res.render('home');
 });
 
 // Pagina de productos
-router.get('/AddProduct', (req, res) => {
-  res.status(200).render('product');
+router.get('/api/NewProduct', authMidd, (req, res) => {
+  res.render('product');
 });
 
 // Consulta todos los datos
-router.get('/api/product', (req, res) => {
+router.get('/api/product', authMidd, (req, res) => {
   Product.find({}, (err, products) => {
     if (err)
       return res.status(500).send({
@@ -42,7 +58,7 @@ router.get('/api/product', (req, res) => {
 });
 
 // Consulta por filtro - Nava Reyes Carlos
-router.get('/api/product/:datoBusqueda', (req, res) => {
+router.get('/api/product/:datoBusqueda', authMidd, (req, res) => {
   let datoBusqueda = req.params.datoBusqueda;
   Product.findById(datoBusqueda, (err, products) => {
     if (err)
@@ -62,41 +78,34 @@ router.get('/api/product/:datoBusqueda', (req, res) => {
   }).lean();
 });
 // Registro de datos
-router.post('/api/product', (req, res) => {
-  let product = new Product();
-  product.name = req.body.name;
-  product.picture = req.body.avatar;
-  product.price = req.body.price;
-  product.category = req.body.category.toLowerCase();
-  product.description = req.body.description;
-
-  console.log(req.body);
-
-  product.save((err, productStored) => {
-    if (err)
-      return res.status(500).send({
-        message: `Èrror al realizar la petición ${err}`,
-      });
-
-    res.redirect('/api/product');
-  });
-});
+const newProduct = require('../controllers/newProduct');
+router.post('/api/product', authMidd, newProduct);
 
 // Modificación de datos (put)
 const putProduct = require('../controllers/putProduct');
-router.put('/api/product/:ProductID', putProduct);
+router.put('/api/product/:ProductID', authMidd, putProduct);
 
 // Eliminacion de un producto(delete)
 const deleteProduct = require('../controllers/deleteProduct');
-router.delete('/api/product/:ProductID', deleteProduct);
+router.delete('/api/product/:ProductID', authMidd, deleteProduct);
 
-router.get('/user/register', (req, res) => {
-  res.render('Register');
-});
+const registerController = require('../controllers/register');
+router.get('/user/register', redirectIfAuth, registerController);
 
-// Autentificacion de usuario
+// Registro de usuario
 const newUserController = require('../controllers/storeUser');
-router.post('/auth/register', newUserController);
+router.post('/auth/register', redirectIfAuth, newUserController);
+
+// Muestra formulario de login
+const loginController = require('../controllers/login');
+router.get('/user/login', redirectIfAuth, loginController);
+
+// Autentificacion de inicio de sesion
+const authLoginUser = require('../controllers/authLogin');
+router.post('/auth/login', redirectIfAuth, authLoginUser);
+
+const LogOutController = require('../controllers/logOut');
+router.get('/auth/logOut', authMidd, LogOutController);
 
 //pagina  404 not found
 router.use((req, res) => {

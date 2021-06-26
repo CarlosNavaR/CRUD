@@ -1,8 +1,9 @@
 <div class='container mt-5'>
-  <table
-    id='myTable'
-    class='table table-stripped table-responsive-md btn-table'
-  >
+  <a class='btn btn-success btn rounded-pill' href='/api/NewProduct'>
+    <i class='fas fa-plus'></i>
+    Nuevo producto
+  </a>
+  <table class='table table-stripped table-responsive-md btn-table mt-4'>
     <thead>
       <tr>
         <th>ID</th>
@@ -15,11 +16,9 @@
         <th class='th-sm'></th>
       </tr>
     </thead>
-
     <tbody>
       {{#products}}
         <tr>
-          <br />
           <td>{{_id}}</td>
           <td>{{name}}</td>
           <td>{{category}}</td>
@@ -37,6 +36,5 @@
         </tr>
       {{/products}}
     </tbody>
-
   </table>
 </div>

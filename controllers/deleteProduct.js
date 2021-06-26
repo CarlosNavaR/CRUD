@@ -17,7 +17,7 @@ module.exports = (req, res) => {
           message: `Error al eliminar el producto ${err}`,
         });
       //res.status(200).send({ message: 'Producto eliminado correctamente' });
-      res.redirect('api/product');
+      res.redirect('/api/product');
     });
   });
 };

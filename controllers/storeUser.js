@@ -12,6 +12,6 @@ module.exports = (req, res) => {
     if (error) {
       return res.redirect('/user/register');
     }
-    res.redirect('/login');
+    res.redirect('/user/login');
   });
 };
